@@ -1,5 +1,7 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:pexpenses/widgets/adaptive_text_button.dart';
 
 class TransactionNew extends StatefulWidget {
   final Function addNewTransaction;
@@ -76,9 +78,9 @@ class _TransactionNewState extends State<TransactionNew> {
                     Text(_selectedDate == null
                         ? 'No Date Choosen!'
                         : 'Picked Date: ${DateFormat.yMd().format(_selectedDate)}'),
-                    TextButton(
-                      child: Text('Choose Date'),
-                      onPressed: _showDatePickerView,
+                    AdaptiveTextButton(
+                      'Choose Date',
+                      _showDatePickerView,
                     )
                   ],
                 ),
