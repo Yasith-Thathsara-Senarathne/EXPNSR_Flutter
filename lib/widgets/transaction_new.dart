@@ -1,5 +1,5 @@
-import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:pexpenses/widgets/adaptive_text_button.dart';
 
@@ -31,7 +31,7 @@ class _TransactionNewState extends State<TransactionNew> {
     }
 
     widget.addNewTransaction(enteredTitle, enteredAmount, selectedDate);
-    Navigator.of(context).pop();
+    Get.back();
   }
 
   void _showDatePickerView() {
@@ -72,18 +72,16 @@ class _TransactionNewState extends State<TransactionNew> {
             ),
             Container(
               height: 70,
-              child: Expanded(
-                child: Row(
-                  children: <Widget>[
-                    Text(_selectedDate == null
-                        ? 'No Date Choosen!'
-                        : 'Picked Date: ${DateFormat.yMd().format(_selectedDate)}'),
-                    AdaptiveTextButton(
-                      'Choose Date',
-                      _showDatePickerView,
-                    )
-                  ],
-                ),
+              child: Row(
+                children: <Widget>[
+                  Text(_selectedDate == null
+                      ? 'No Date Choosen!'
+                      : 'Picked Date: ${DateFormat.yMd().format(_selectedDate)}'),
+                  AdaptiveTextButton(
+                    'Choose Date',
+                    _showDatePickerView,
+                  )
+                ],
               ),
             ),
             ElevatedButton(
