@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:pexpenses/models/transaction.dart';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:pexpenses/pages/home_page/home_controller.dart';
 import 'package:pexpenses/widgets/chart_bar.dart';
 
 class Chart extends StatelessWidget {
-  final List<Transaction> recentTransactionList;
-
-  Chart(this.recentTransactionList);
+  final homeController = Get.find<HomeController>();
 
   List<Map<String, Object>> get groupedTransactionValues {
+    var recentTransactionList = homeController.transactionList;
     return List.generate(7, (index) {
       final weekDay = DateTime.now().subtract(
         Duration(days: index),
@@ -37,25 +37,26 @@ class Chart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(groupedTransactionValues);
     return Card(
       elevation: 6,
       margin: EdgeInsets.all(20),
       child: Padding(
         padding: EdgeInsets.all(10),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: groupedTransactionValues.map((transaction) {
-            return Flexible(
-              fit: FlexFit.tight,
-              child: ChartBar(
-                  transaction['day'],
-                  transaction['amount'],
-                  maxSpending == 0.0
-                      ? 0.0
-                      : (transaction['amount'] as double) / maxSpending),
-            );
-          }).toList(),
+        child: Obx(
+          () => Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: groupedTransactionValues.map((transaction) {
+              return Flexible(
+                fit: FlexFit.tight,
+                child: ChartBar(
+                    transaction['day'],
+                    transaction['amount'],
+                    maxSpending == 0.0
+                        ? 0.0
+                        : (transaction['amount'] as double) / maxSpending),
+              );
+            }).toList(),
+          ),
         ),
       ),
     );
